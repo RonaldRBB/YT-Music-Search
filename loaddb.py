@@ -5,7 +5,7 @@ from datetime import datetime
 from sqlalchemy.exc import IntegrityError
 
 from app.models import VideoList
-from config import session
+from config import FILES_PATH, session
 
 
 def get_sorted_files(directory):
@@ -41,8 +41,7 @@ def process_files(directory):
 
 def main():
     """Funcion main."""
-    directory = "/media/r/RHD00P0_DATA/videos/musica/"
-    process_files(directory)
+    process_files(FILES_PATH)
 
 
 if __name__ == "__main__":

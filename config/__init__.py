@@ -10,6 +10,7 @@ APP_HOST = config("APP_HOST")
 APP_PORT = config("APP_PORT")
 APP_DEBUG = config("APP_DEBUG")
 DOWNLOAD_PATH = config("DOWNLOAD_PATH")
+FILES_PATH = config("FILES_PATH")
 # DB
 # -----------------------------------------------------------------------------
 DB_CONNECTION = config("DB_CONNECTION")
