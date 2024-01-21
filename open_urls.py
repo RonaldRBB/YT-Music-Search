@@ -13,16 +13,19 @@ def run():
         VideoList._folder == 'varios', VideoList._opened == False).order_by(VideoList._created_at).all()
     i = 0
     for video in video_list:
-        video_name = os.path.splitext(video.name)[0]
-        print(f"{i} : {video_name}")
-        open_url(video_name)
+        print(f"{i} : {video.name}")
+        open_url(video.name)
         video.opened = True
         i += 1
-        if i == 10:
-            key = input("Conitnua? enter/n: ")
+        if i == 20:
+            key = input("Conitnua? enter | close q | close no save n: ")
             if key == '':
                 session.commit()
                 i = 0
+            elif key == 'q':
+                session.commit()
+                session.close()
+                break
             elif key.lower() == 'n':
                 session.rollback()
                 session.close()
