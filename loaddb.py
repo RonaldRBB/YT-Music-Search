@@ -8,23 +8,22 @@ from app.models import VideoList
 from config import FILES_PATH, session
 
 
-def get_sorted_files(directory):
+def get_sorted_files():
     """Funcion get_sorted_files."""
     file_paths = []
-    for root, _, files in os.walk(directory):
+    for root, _, files in os.walk(FILES_PATH):
         for file in files:
             file_paths.append(os.path.join(root, file))
     return sorted(file_paths, key=lambda f: os.path.getmtime(f))
 
 
-def process_files(directory):
+def process_files():
     """Funcion process_files."""
-    files = get_sorted_files(directory)
+    files = get_sorted_files()
     for file in files:
-        print("=" * 50)
-        print(file)
         folder_name = os.path.basename(os.path.dirname(file))
-        file_name = os.path.basename(file)
+        file_name = os.path.splitext(os.path.basename(file))[0]
+        print(f"* {file_name}")
         video = VideoList(
             folder=folder_name,
             name=file_name,
@@ -35,13 +34,15 @@ def process_files(directory):
             session.add(video)
             session.commit()
         except IntegrityError:
-            print("Video already exists")
+            print("- Video already exists")
             session.rollback()
 
 
 def main():
     """Funcion main."""
-    process_files(FILES_PATH)
+    if not os.path.exists(FILES_PATH):
+        raise FileNotFoundError(FILES_PATH)
+    process_files()
 
 
 if __name__ == "__main__":

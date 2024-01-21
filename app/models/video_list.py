@@ -2,6 +2,7 @@
 from datetime import datetime
 from sqlalchemy import Boolean, Text, DateTime
 from sqlalchemy.orm import Mapped, mapped_column
+import re
 
 from config import DB_PREFIX, Base
 
@@ -37,6 +38,7 @@ class VideoList(Base):
     def name(self, value: str) -> None:
         """Set name."""
         self._name = value
+        self.__format_name()
 
     @property
     def created_at(self) -> datetime:
@@ -57,3 +59,27 @@ class VideoList(Base):
     def opened(self, value: bool) -> None:
         """Set opened."""
         self._opened = value
+    # private function delete extensions
+
+    def __format_name(self):
+        """Funcion treat_name."""
+        self.__delete_res_from_name()
+        self.__delete_fps_from_name()
+        self.__delete_audio_from_name()
+
+    def __delete_res_from_name(self):
+        """Funcion delete_res_from_name."""
+        self._name = re.sub(r'[^a-zA-Z)\]]?\d{3,4}p[\W_-]?', r'', self._name)
+
+    def __delete_fps_from_name(self):
+        """Funcion delete_fps_from_name."""
+        self._name = re.sub(r'[^a-zA-Z)\]]?\d{1,3}fps[\W_-]?', r'', self._name)
+
+    def __delete_audio_from_name(self):
+        """Funcion delete_fps_from_name."""
+        self._name = re.sub(
+            r'[^a-zA-Z)\]]?(AV1|H264|VP9|H.264)[\W_-]?', r'', self._name)
+        self._name = re.sub(
+            r'[^a-zA-Z)\]]?(LQ)?[^a-zA-Z)\]]?\d{3,4}kbit[\W_-]?', r'', self._name)
+        self._name = re.sub(
+            r'[^a-zA-Z)\]]?(AAC|AAC_2|Opus|Vorbis)[\W_-]?', r'', self._name)
