@@ -22,7 +22,8 @@ def get_video_list():
 
 def open_url(video_name):
     """Funcion open_url."""
-    url = f"www.youtube.com/watch?v={urllib.parse.quote_plus(video_name)}"
+    url = f"https://www.youtube.com/results?search_query={
+        urllib.parse.quote_plus(video_name)}"
     webbrowser.open(url)
 
 
@@ -42,7 +43,6 @@ def run():
                 i = 0
             elif key == 'q':
                 session.commit()
-                session.close()
                 break
             elif key.lower() == 'n':
                 session.rollback()

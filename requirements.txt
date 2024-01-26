@@ -1,5 +1,4 @@
 SQLAlchemy
 python-decouple
-libpq-dev
 psycopg2-binary
 psycopg2
