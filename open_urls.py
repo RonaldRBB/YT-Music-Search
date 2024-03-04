@@ -13,7 +13,7 @@ def get_video_list():
     video_list = session.query(
         VideoList
     ).filter(
-        VideoList._folder == 'varios', VideoList._opened == False
+        VideoList._folder == 'dubstep', VideoList._opened == False
     ).order_by(
         VideoList._created_at
     ).all()
@@ -36,8 +36,8 @@ def run():
         open_url(video.name)
         video.opened = True
         i += 1
-        if i == 20:
-            key = input("Conitnua? enter | close q | close no save n: ")
+        if i == len(video_list) or i == 30:
+            key = input("Continua? enter | close q | close no save n: ")
             if key == '':
                 session.commit()
                 i = 0
