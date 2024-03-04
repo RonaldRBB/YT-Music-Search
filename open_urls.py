@@ -13,7 +13,7 @@ def get_video_list():
     video_list = session.query(
         VideoList
     ).filter(
-        VideoList._folder == 'dubstep', VideoList._opened == False
+        VideoList._opened == False
     ).order_by(
         VideoList._created_at
     ).all()
